@@ -4,25 +4,44 @@ import React, {
   useContext,
   useEffect,
   ReactNode,
+  useCallback,
 } from 'react';
 import api from '../services/api';
+import UserEntity from '../domain/entity/userEntity';
+import * as authServices from '../services/auth';
 
 interface AuthContextProps {
   isAuthenticated: boolean;
-  login: (token: string) => void;
+  login: (newToken: string) => void;
   logout: () => void;
+  user: UserEntity | null;
 }
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-const AuthContext = createContext<AuthContextProps | undefined>(undefined);
+const AuthContext = createContext<AuthContextProps | undefined>({
+  isAuthenticated: false,
+  login: () => {},
+  logout: () => {},
+  user: null,
+});
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Estado para verificar se a autenticação está carregando
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [user, setUser] = useState<UserEntity | null>(null);
+
+  const retriveUser = useCallback(async () => {
+    try {
+      const currentUser = await authServices.getCurrentUser();
+      setUser(currentUser);
+    } catch {
+      logout();
+    }
+  }, []);
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -30,28 +49,32 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setToken(storedToken);
       setIsAuthenticated(true);
       api.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
+
+      retriveUser();
     }
     setIsLoading(false); // Define o carregamento como concluído
-  }, []);
+  }, [retriveUser]);
 
   const login = (newToken: string) => {
     localStorage.setItem('token', newToken);
     setToken(newToken);
     setIsAuthenticated(true);
     api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
+    retriveUser();
   };
 
   const logout = () => {
+    setIsLoading(true);
     localStorage.removeItem('token');
     setToken(null);
     setIsAuthenticated(false);
     delete api.defaults.headers.common['Authorization'];
+    setIsLoading(false);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {!isLoading ? children : <div>Carregando...</div>}{' '}
-      {/* Exibe o conteúdo apenas após o carregamento */}
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, user }}>
+      {!isLoading ? children : <div>Carregando...</div>}
     </AuthContext.Provider>
   );
 };

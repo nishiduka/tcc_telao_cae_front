@@ -3,6 +3,8 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import * as authService from '../services/auth';
+
 function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -14,15 +16,10 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/login', { email, password });
-
-      if (response.status === 200 && response.data.success) {
-        login(response.data.content);
-        navigate('/dashboard');
-      } else {
-        setError('Login ou senha incorretos');
-      }
-    } catch (error) {
+      const token = await authService.login(email, password);
+      login(token);
+      navigate('/dashboard');
+    } catch {
       setError('Erro ao fazer login. Tente novamente.');
     }
   };
