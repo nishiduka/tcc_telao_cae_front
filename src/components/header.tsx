@@ -10,7 +10,6 @@ import {
   Dropdown,
 } from 'reactstrap';
 import { useAuth } from '../context/AuthContext';
-import Menu from './menu';
 
 const Header = ({ userName }: { userName: string }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -26,7 +25,6 @@ const Header = ({ userName }: { userName: string }) => {
         </NavbarBrand>
 
         <div>
-          <Menu />
           <Nav className="ml-auto" navbar>
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
               <DropdownToggle caret color="success">

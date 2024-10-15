@@ -1,13 +1,16 @@
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import RoutesComponent from './routes/routes';
+import { AlertProvider } from './hoooks/useAlert';
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <RoutesComponent />
-      </Router>
+      <AlertProvider>
+        <Router>
+          <RoutesComponent />
+        </Router>
+      </AlertProvider>
     </AuthProvider>
   );
 }

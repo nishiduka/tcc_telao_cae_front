@@ -2,8 +2,8 @@ type SalaEntity = {
   id?: number;
   nome: string;
   descricao: string;
-  qtd_computadores: number;
-  qtd_alunos: number;
+  qtdComputadores: number;
+  qtdAlunos: number;
   created_at: Date;
   updated_at: Date;
 };

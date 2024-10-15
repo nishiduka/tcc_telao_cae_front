@@ -6,7 +6,7 @@ const PATH = '/salas';
 const request = new RequestGeneric();
 
 export const list = async (): Promise<GenericResponse<SalaEntity[]>> => {
-  return request.get<SalaEntity[]>(PATH + '/');
+  return request.get<SalaEntity[]>(PATH);
 };
 
 export const search = async (
