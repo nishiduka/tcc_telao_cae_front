@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Header from './header';
 import { useAuth } from '../context/AuthContext';
 import Aside from './aside';
-import { useAlert } from '../hoooks/useAlert';
+import { useAlert } from '../hooks/useAlert';
 import { Alert } from 'reactstrap';
 
 const Template = ({

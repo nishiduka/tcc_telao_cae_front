@@ -3,8 +3,8 @@ import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
 
 import Template from '../../components/template';
 
-import { useForm } from '../../hoooks/useForm';
-import { useAlert } from '../../hoooks/useAlert';
+import { useForm } from '../../hooks/useForm';
+import { useAlert } from '../../hooks/useAlert';
 import { create } from '../../services/cursos';
 
 const Criar = () => {

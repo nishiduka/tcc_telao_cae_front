@@ -2,8 +2,8 @@ import Table from '../../components/table';
 import Template from '../../components/template';
 import CursoEntity from '../../domain/entity/cursoEntity';
 import { list, remove } from '../../services/cursos';
-import useRequest from '../../hoooks/useRequest';
-import { useAlert } from '../../hoooks/useAlert';
+import useRequest from '../../hooks/useRequest';
+import { useAlert } from '../../hooks/useAlert';
 
 const Listagem = () => {
   const { data, loading, error, fetchData } = useRequest<CursoEntity[]>(

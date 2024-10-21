@@ -14,16 +14,6 @@ type Route = {
 
 const routes = [
   {
-    label: 'Inicio',
-    href: '/Dashboard',
-    child: [
-      {
-        label: 'Dashboard',
-        href: '/dashboard',
-      },
-    ],
-  },
-  {
     label: 'Salas',
     href: '/salas',
     child: [

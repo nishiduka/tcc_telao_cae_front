@@ -1,8 +1,8 @@
 import Table from '../../components/table';
 import Template from '../../components/template';
 import { list, remove } from '../../services/professores';
-import useRequest from '../../hoooks/useRequest';
-import { useAlert } from '../../hoooks/useAlert';
+import useRequest from '../../hooks/useRequest';
+import { useAlert } from '../../hooks/useAlert';
 import ProfessorEntity from '../../domain/entity/professorEntity';
 
 const Listagem = () => {

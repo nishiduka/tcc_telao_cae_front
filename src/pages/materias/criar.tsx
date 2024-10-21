@@ -2,11 +2,11 @@ import { useState } from 'react';
 
 import Template from '../../components/template';
 import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
-import useRequest from '../../hoooks/useRequest';
+import useRequest from '../../hooks/useRequest';
 import { list } from '../../services/cursos';
 import { create } from '../../services/materias';
-import { useForm } from '../../hoooks/useForm';
-import { useAlert } from '../../hoooks/useAlert';
+import { useForm } from '../../hooks/useForm';
+import { useAlert } from '../../hooks/useAlert';
 import CursoEntity from '../../domain/entity/cursoEntity';
 
 const Criar = () => {

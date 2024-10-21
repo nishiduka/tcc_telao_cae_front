@@ -3,9 +3,9 @@ import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
 import { useParams } from 'react-router-dom';
 
 import Template from '../../components/template';
-import { useForm } from '../../hoooks/useForm';
-import { useAlert } from '../../hoooks/useAlert';
-import useRequest from '../../hoooks/useRequest';
+import { useForm } from '../../hooks/useForm';
+import { useAlert } from '../../hooks/useAlert';
+import useRequest from '../../hooks/useRequest';
 import { update, search } from '../../services/cursos';
 import CursoEntity from '../../domain/entity/cursoEntity';
 

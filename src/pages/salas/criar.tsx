@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 import Template from '../../components/template';
 import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
-import useRequest from '../../hoooks/useRequest';
+import useRequest from '../../hooks/useRequest';
 import BlocoEntity from '../../domain/entity/blocoEntity';
 import { list } from '../../services/blocos';
 import { create } from '../../services/salas';
-import { useForm } from '../../hoooks/useForm';
-import { useAlert } from '../../hoooks/useAlert';
+import { useForm } from '../../hooks/useForm';
+import { useAlert } from '../../hooks/useAlert';
 
 const Criar = () => {
   const { data, loading, error } = useRequest<BlocoEntity[]>(list, []);

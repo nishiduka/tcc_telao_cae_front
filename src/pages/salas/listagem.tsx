@@ -2,8 +2,8 @@ import Table from '../../components/table';
 import Template from '../../components/template';
 import SalaEntity from '../../domain/entity/salaEntity';
 import { list, remove } from '../../services/salas';
-import useRequest from '../../hoooks/useRequest';
-import { useAlert } from '../../hoooks/useAlert';
+import useRequest from '../../hooks/useRequest';
+import { useAlert } from '../../hooks/useAlert';
 
 const Listagem = () => {
   const { data, loading, error, fetchData } = useRequest<SalaEntity[]>(
