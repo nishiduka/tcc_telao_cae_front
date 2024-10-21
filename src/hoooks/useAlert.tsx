@@ -37,18 +37,19 @@ export const AlertProvider: React.FC<AlertProviderProps> = ({ children }) => {
   const [alert, setAlert] = useState<AlertState>({
     isOpen: false,
     message: '',
+    type: 'info',
   });
 
   useEffect(() => {
     if (alert.isOpen) {
       setTimeout(() => {
-        setAlert({ isOpen: false, message: '' });
+        setAlert({ isOpen: false, message: '', type: 'info' });
       }, 15000);
     }
   }, [alert]);
 
   const closeAlert = useCallback(() => {
-    setAlert({ isOpen: false, message: '' });
+    setAlert({ isOpen: false, message: '', type: 'info' });
   }, []);
 
   return (

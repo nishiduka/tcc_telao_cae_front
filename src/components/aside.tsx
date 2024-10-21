@@ -37,6 +37,48 @@ const routes = [
       },
     ],
   },
+  {
+    label: 'Cursos',
+    href: '/cursos',
+    child: [
+      {
+        label: 'Listagem',
+        href: '/cursos/listagem',
+      },
+      {
+        label: 'Criar',
+        href: '/cursos/criar',
+      },
+    ],
+  },
+  {
+    label: 'Materias',
+    href: '/materias',
+    child: [
+      {
+        label: 'Listagem',
+        href: '/materias/listagem',
+      },
+      {
+        label: 'Criar',
+        href: '/materias/criar',
+      },
+    ],
+  },
+  {
+    label: 'Professores',
+    href: '/professores',
+    child: [
+      {
+        label: 'Listagem',
+        href: '/professores/listagem',
+      },
+      {
+        label: 'Criar',
+        href: '/professores/criar',
+      },
+    ],
+  },
 ] as Route[];
 
 const Aside = () => {

@@ -1,12 +1,12 @@
 import Table from '../../components/table';
 import Template from '../../components/template';
-import SalaEntity from '../../domain/entity/salaEntity';
-import { list, remove } from '../../services/salas';
+import { list, remove } from '../../services/professores';
 import useRequest from '../../hoooks/useRequest';
 import { useAlert } from '../../hoooks/useAlert';
+import ProfessorEntity from '../../domain/entity/professorEntity';
 
 const Listagem = () => {
-  const { data, loading, error, fetchData } = useRequest<SalaEntity[]>(
+  const { data, loading, error, fetchData } = useRequest<ProfessorEntity[]>(
     list,
     []
   );
@@ -18,7 +18,7 @@ const Listagem = () => {
       fetchData();
       setAlert({
         isOpen: true,
-        message: 'Sala removida com sucesso',
+        message: 'Professor removida com sucesso',
         type: 'success',
       });
     } catch (error: unknown) {
@@ -30,20 +30,19 @@ const Listagem = () => {
   return (
     <Template isLoading={loading} error={error}>
       <div className="mt-5 mb-3">
-        <h2>Listagem de salas</h2>
+        <h2>Listagem de Professor</h2>
         <hr />
       </div>
 
-      <Table<Omit<SalaEntity, 'bloco'>>
+      <Table<ProfessorEntity>
         headers={[
           { label: 'Nome', key: 'nome' },
-          { label: 'Capacidade', key: 'qtdAlunos' },
           {
             label: 'Operações',
-            key: (data: Omit<SalaEntity, 'bloco'>) => (
+            key: (data: ProfessorEntity) => (
               <div className="d-flex gap-2 justify-content-center">
                 <a
-                  href={`/salas/atualizar/${data.id}`}
+                  href={`/professores/atualizar/${data.id}`}
                   className="btn btn-primary"
                 >
                   Editar

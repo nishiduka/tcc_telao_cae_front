@@ -1,29 +1,60 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
+import { useParams } from 'react-router-dom';
 
 import Template from '../../components/template';
-import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
-import useRequest from '../../hoooks/useRequest';
-import BlocoEntity from '../../domain/entity/blocoEntity';
-import { list } from '../../services/blocos';
-import { create } from '../../services/salas';
 import { useForm } from '../../hoooks/useForm';
 import { useAlert } from '../../hoooks/useAlert';
+import useRequest from '../../hoooks/useRequest';
+import BlocoEntity from '../../domain/entity/blocoEntity';
+import SalaEntity from '../../domain/entity/salaEntity';
+import { list } from '../../services/blocos';
+import { update, search } from '../../services/salas';
 
-const Criar = () => {
+const Atualizar = () => {
+  const params = useParams();
+  const id = parseInt(params.id || '');
+
   const { data, loading, error } = useRequest<BlocoEntity[]>(list, []);
+
+  const getInfo = useCallback(async () => {
+    const response = await search(id);
+    return response;
+  }, [id]);
+
+  const salaInfo = useRequest<SalaEntity>(getInfo, {
+    nome: '',
+    bloco: {
+      id: 0,
+      nome: '',
+    },
+    descricao: '',
+    qtdComputadores: 0,
+    qtdAlunos: 0,
+  });
+
   const { setAlert } = useAlert();
   const [disable, setDisable] = useState(false);
-
-  const { values, handleChange, validate } = useForm(
+  const { values, handleChange, validate, setValues } = useForm(
     {
-      nome: '',
-      bloco: '1',
-      descricao: '',
-      qtdComputadores: '0',
-      qtdAlunos: '0',
+      nome: salaInfo.data.nome,
+      bloco: salaInfo.data.bloco.id,
+      descricao: salaInfo.data.descricao,
+      qtdComputadores: salaInfo.data.qtdComputadores.toString(),
+      qtdAlunos: salaInfo.data.qtdAlunos.toString(),
     },
     ['nome', 'bloco', 'descricao', 'qtdComputadores', 'qtdAlunos']
   );
+
+  useEffect(() => {
+    setValues({
+      nome: salaInfo.data.nome,
+      bloco: salaInfo.data.bloco.id,
+      descricao: salaInfo.data.descricao,
+      qtdComputadores: salaInfo.data.qtdComputadores.toString(),
+      qtdAlunos: salaInfo.data.qtdAlunos.toString(),
+    });
+  }, [salaInfo.data, setValues]);
 
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,14 +65,13 @@ const Criar = () => {
       alert('Preencha todos os campos');
       return;
     }
+    console.log('values::::', values);
 
     try {
-      const response = await create({
+      const response = await update({
+        id: id,
         ...values,
-        bloco: {
-          id: parseInt(values.bloco),
-          nome: '',
-        },
+        bloco: { id: values.bloco, nome: '' },
         qtdAlunos: parseInt(values.qtdAlunos),
         qtdComputadores: parseInt(values.qtdComputadores),
       });
@@ -58,7 +88,7 @@ const Criar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Sala criada com sucesso',
+        message: 'Sala atualizada com sucesso',
       });
 
       setTimeout(() => {
@@ -75,9 +105,12 @@ const Criar = () => {
   };
 
   return (
-    <Template isLoading={loading} error={error}>
+    <Template
+      isLoading={loading || salaInfo.loading}
+      error={error || salaInfo.error}
+    >
       <div className="mt-5 mb-3">
-        <h2>Criar sala</h2>
+        <h2>Atualizar sala</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
@@ -88,7 +121,7 @@ const Criar = () => {
               <option
                 key={bloco.id}
                 value={bloco.id}
-                selected={values.bloco === bloco.id.toString()}
+                selected={values.bloco === bloco.id}
               >
                 {bloco.nome}
               </option>
@@ -156,4 +189,4 @@ const Criar = () => {
   );
 };
 
-export default Criar;
+export default Atualizar;

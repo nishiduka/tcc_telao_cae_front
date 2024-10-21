@@ -1,12 +1,12 @@
 import Table from '../../components/table';
 import Template from '../../components/template';
-import SalaEntity from '../../domain/entity/salaEntity';
-import { list, remove } from '../../services/salas';
 import useRequest from '../../hoooks/useRequest';
 import { useAlert } from '../../hoooks/useAlert';
+import MateriaEntity from '../../domain/entity/materiaEntity';
+import { list, remove } from '../../services/materias';
 
 const Listagem = () => {
-  const { data, loading, error, fetchData } = useRequest<SalaEntity[]>(
+  const { data, loading, error, fetchData } = useRequest<MateriaEntity[]>(
     list,
     []
   );
@@ -30,20 +30,24 @@ const Listagem = () => {
   return (
     <Template isLoading={loading} error={error}>
       <div className="mt-5 mb-3">
-        <h2>Listagem de salas</h2>
+        <h2>Listagem de Materias</h2>
         <hr />
       </div>
 
-      <Table<Omit<SalaEntity, 'bloco'>>
+      <Table<MateriaEntity>
         headers={[
           { label: 'Nome', key: 'nome' },
-          { label: 'Capacidade', key: 'qtdAlunos' },
+          { label: 'Sigla', key: 'sigla' },
+          {
+            label: 'curso',
+            key: (materia: MateriaEntity) => materia.curso.nome,
+          },
           {
             label: 'Operações',
-            key: (data: Omit<SalaEntity, 'bloco'>) => (
+            key: (data: Omit<MateriaEntity, 'curso'>) => (
               <div className="d-flex gap-2 justify-content-center">
                 <a
-                  href={`/salas/atualizar/${data.id}`}
+                  href={`/materias/atualizar/${data.id}`}
                   className="btn btn-primary"
                 >
                   Editar

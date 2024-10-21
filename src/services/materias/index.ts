@@ -6,7 +6,7 @@ const PATH = '/materias';
 const request = new RequestGeneric();
 
 export const list = async (): Promise<GenericResponse<MateriaEntity[]>> => {
-  return request.get<MateriaEntity[]>(PATH + '/');
+  return request.get<MateriaEntity[]>(PATH);
 };
 
 export const search = async (
@@ -18,7 +18,7 @@ export const search = async (
 export const create = async (
   data: MateriaEntity
 ): Promise<GenericResponse<MateriaEntity>> => {
-  return request.post<MateriaEntity>(PATH + '/', data);
+  return request.post<MateriaEntity>(PATH, data);
 };
 
 export const update = async (

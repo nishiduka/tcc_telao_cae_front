@@ -4,6 +4,9 @@ import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import { PrivateRoute } from './privateRoute';
 import { salasRoutes } from '../pages/salas/routes';
+import { cursosRoutes } from '../pages/cursos/routes';
+import { materiasRoutes } from '../pages/materias/routes';
+import { professoresRoutes } from '../pages/professores/routes';
 
 const routes = [
   {
@@ -22,6 +25,9 @@ const routes = [
     isPublic: false,
   },
   ...salasRoutes,
+  ...cursosRoutes,
+  ...materiasRoutes,
+  ...professoresRoutes,
 ];
 
 const RoutesComponent = () => {

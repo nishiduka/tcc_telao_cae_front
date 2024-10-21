@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Table as TableComb } from 'reactstrap';
 
-const Table = <T extends { [key: string]: string | number | Date }>({
+const Table = <T extends { [key: string]: string | number | Date | unknown }>({
   headers,
   data,
 }: {

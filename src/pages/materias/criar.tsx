@@ -3,26 +3,24 @@ import { useState } from 'react';
 import Template from '../../components/template';
 import { Label, Input, Button, FormGroup, Form } from 'reactstrap';
 import useRequest from '../../hoooks/useRequest';
-import BlocoEntity from '../../domain/entity/blocoEntity';
-import { list } from '../../services/blocos';
-import { create } from '../../services/salas';
+import { list } from '../../services/cursos';
+import { create } from '../../services/materias';
 import { useForm } from '../../hoooks/useForm';
 import { useAlert } from '../../hoooks/useAlert';
+import CursoEntity from '../../domain/entity/cursoEntity';
 
 const Criar = () => {
-  const { data, loading, error } = useRequest<BlocoEntity[]>(list, []);
+  const { data, loading, error } = useRequest<CursoEntity[]>(list, []);
   const { setAlert } = useAlert();
   const [disable, setDisable] = useState(false);
 
   const { values, handleChange, validate } = useForm(
     {
       nome: '',
-      bloco: '1',
-      descricao: '',
-      qtdComputadores: '0',
-      qtdAlunos: '0',
+      curso: '',
+      sigla: '',
     },
-    ['nome', 'bloco', 'descricao', 'qtdComputadores', 'qtdAlunos']
+    ['nome', 'curso', 'sigla']
   );
 
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,12 +36,11 @@ const Criar = () => {
     try {
       const response = await create({
         ...values,
-        bloco: {
-          id: parseInt(values.bloco),
+        curso: {
+          id: parseInt(values.curso),
           nome: '',
+          sigla: '',
         },
-        qtdAlunos: parseInt(values.qtdAlunos),
-        qtdComputadores: parseInt(values.qtdComputadores),
       });
 
       if (!response.success) {
@@ -62,7 +59,7 @@ const Criar = () => {
       });
 
       setTimeout(() => {
-        window.location.href = '/salas/listagem';
+        window.location.href = '/materias/listagem';
       }, 2500);
     } catch (e: unknown) {
       setAlert({
@@ -77,20 +74,20 @@ const Criar = () => {
   return (
     <Template isLoading={loading} error={error}>
       <div className="mt-5 mb-3">
-        <h2>Criar sala</h2>
+        <h2>Criar Materias</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
         <FormGroup>
-          <Label for="bloco">Bloco</Label>
-          <Input id="bloco" name="bloco" type="select" onChange={handleChange}>
-            {data.map((bloco) => (
+          <Label for="curso">Curso</Label>
+          <Input id="curso" name="curso" type="select" onChange={handleChange}>
+            {data.map((curso) => (
               <option
-                key={bloco.id}
-                value={bloco.id}
-                selected={values.bloco === bloco.id.toString()}
+                key={curso.id}
+                value={curso.id}
+                selected={values.curso === curso?.id?.toString()}
               >
-                {bloco.nome}
+                {curso.nome}
               </option>
             ))}
           </Input>
@@ -110,41 +107,15 @@ const Criar = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label for="nome">Descrição</Label>
+          <Label for="nome">Sigla</Label>
           <Input
-            id="descricao"
-            name="descricao"
-            placeholder="Descricao da Sala"
+            id="sigla"
+            name="sigla"
+            placeholder="Sigla da Materia"
             type="text"
             required
             onChange={handleChange}
-            value={values.descricao}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label for="nome">Quantidade de alunos</Label>
-          <Input
-            id="qtdAlunos"
-            name="qtdAlunos"
-            placeholder="Quantidade de alunos"
-            type="text"
-            required
-            onChange={handleChange}
-            value={values.qtdAlunos}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label for="nome">Quantidade de computadores</Label>
-          <Input
-            id="qtdComputadores"
-            name="qtdComputadores"
-            placeholder="Quantidade de computadores"
-            type="text"
-            required
-            onChange={handleChange}
-            value={values.qtdComputadores}
+            value={values.sigla}
           />
         </FormGroup>
 

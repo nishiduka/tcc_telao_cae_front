@@ -5,8 +5,8 @@ type MateriaEntity = {
   nome: string;
   sigla: string;
   curso: CursoEntity;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 };
 
 export default MateriaEntity;

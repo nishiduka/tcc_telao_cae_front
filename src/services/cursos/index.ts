@@ -6,7 +6,7 @@ const PATH = '/cursos';
 const request = new RequestGeneric();
 
 export const list = async (): Promise<GenericResponse<CursoEntity[]>> => {
-  return request.get<CursoEntity[]>(PATH + '/');
+  return request.get<CursoEntity[]>(PATH);
 };
 
 export const search = async (
@@ -18,7 +18,7 @@ export const search = async (
 export const create = async (
   data: CursoEntity
 ): Promise<GenericResponse<CursoEntity>> => {
-  return request.post<CursoEntity>(PATH + '/', data);
+  return request.post<CursoEntity>(PATH, data);
 };
 
 export const update = async (

@@ -34,7 +34,7 @@ const Template = ({
       <main className="container row m-auto">
         {alert.isOpen && (
           <Alert
-            color="danger"
+            color={alert.type}
             toggle={closeAlert}
             className="position-fixed z-2"
             style={{ width: 300, top: 10, right: 10 }}

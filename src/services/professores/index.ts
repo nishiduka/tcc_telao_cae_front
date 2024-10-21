@@ -6,7 +6,7 @@ const PATH = '/professores';
 const request = new RequestGeneric();
 
 export const list = async (): Promise<GenericResponse<ProfessorEntity[]>> => {
-  return request.get<ProfessorEntity[]>(PATH + '/');
+  return request.get<ProfessorEntity[]>(PATH);
 };
 
 export const search = async (
@@ -18,7 +18,7 @@ export const search = async (
 export const create = async (
   data: ProfessorEntity
 ): Promise<GenericResponse<ProfessorEntity>> => {
-  return request.post<ProfessorEntity>(PATH + '/', data);
+  return request.post<ProfessorEntity>(PATH, data);
 };
 
 export const update = async (

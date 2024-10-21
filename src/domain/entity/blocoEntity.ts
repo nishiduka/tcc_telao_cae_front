@@ -1,8 +1,8 @@
-type CursoEntity = {
-  id?: number;
+type BlocoEntity = {
+  id: number;
   nome: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 };
 
-export default CursoEntity;
+export default BlocoEntity;

@@ -2,19 +2,19 @@ import Atualizar from './atualizar';
 import Criar from './criar';
 import Listagem from './listagem';
 
-export const salasRoutes = [
+export const materiasRoutes = [
   {
-    route: '/salas/listagem',
+    route: '/materias/listagem',
     component: Listagem,
     isPublic: false,
   },
   {
-    route: '/salas/criar',
+    route: '/materias/criar',
     component: Criar,
     isPublic: false,
   },
   {
-    route: '/salas/atualizar/:id',
+    route: '/materias/atualizar/:id',
     component: Atualizar,
     isPublic: false,
   },

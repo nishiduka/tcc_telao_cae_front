@@ -18,7 +18,7 @@ export const search = async (
 export const create = async (
   data: SalaEntity
 ): Promise<GenericResponse<SalaEntity>> => {
-  return request.post<SalaEntity>(PATH + '/', data);
+  return request.post<SalaEntity>(PATH, data);
 };
 
 export const update = async (
