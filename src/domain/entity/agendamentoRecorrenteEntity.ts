@@ -1,17 +1,18 @@
+import { EDiaSemana } from './eDiaSemana';
 import MateriaEntity from './materiaEntity';
 import ProfessorEntity from './professorEntity';
 import SalaEntity from './salaEntity';
 
 type AgendamentoRecorrenteEntity = {
   id?: number;
-  dia_semana: string;
-  horario_inicio: string;
-  horario_fim: string;
-  professor: ProfessorEntity;
+  diaSemana: EDiaSemana;
+  horaInicio: string;
+  horaFim: string;
+  professor: Required<Pick<ProfessorEntity, 'id'>> & ProfessorEntity;
   materia: MateriaEntity;
   sala: SalaEntity;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 };
 
 export default AgendamentoRecorrenteEntity;

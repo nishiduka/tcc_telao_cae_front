@@ -16,6 +16,10 @@ export class RequestGeneric {
       message = error;
     }
 
+    if (error?.response?.data?.message !== null) {
+      message = error?.response?.data?.message;
+    }
+
     return message;
   }
 

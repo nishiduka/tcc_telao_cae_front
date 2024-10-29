@@ -14,6 +14,20 @@ type Route = {
 
 const routes = [
   {
+    label: 'Agendamento',
+    href: '/agendamento',
+    child: [
+      {
+        label: 'Listagem',
+        href: '/agendamento/listagem',
+      },
+      {
+        label: 'Criar Agendamento Recorrente',
+        href: '/agendamento/criar',
+      },
+    ],
+  },
+  {
     label: 'Salas',
     href: '/salas',
     child: [
