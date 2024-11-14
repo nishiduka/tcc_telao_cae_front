@@ -18,7 +18,10 @@ const useRequest = <T,>(
       setData(response.content);
     } catch (error: unknown) {
       setError(error as Error);
-      setAlert({ isOpen: true, message: error.message, type: 'danger' });
+
+      if (error instanceof Error && error.message != null) {
+        setAlert({ isOpen: true, message: error.message, type: 'danger' });
+      }
     } finally {
       setLoading(false);
     }

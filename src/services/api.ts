@@ -9,7 +9,8 @@ export class RequestGeneric {
   private genericError: string =
     'Erro ao realizar a operação. Tente novamente.';
 
-  private handleError(error: string | unknown): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private handleError(error: any): string {
     let message = this.genericError;
 
     if (typeof error === 'string') {

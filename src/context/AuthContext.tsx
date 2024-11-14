@@ -15,6 +15,7 @@ interface AuthContextProps {
   login: (newToken: string) => void;
   logout: () => void;
   user: UserEntity | null;
+  token: string | null;
 }
 
 interface AuthProviderProps {
@@ -26,6 +27,7 @@ const AuthContext = createContext<AuthContextProps | undefined>({
   login: () => {},
   logout: () => {},
   user: null,
+  token: null,
 });
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
@@ -73,7 +75,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, user }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, login, logout, user, token }}
+    >
       {!isLoading ? children : <div>Carregando...</div>}
     </AuthContext.Provider>
   );

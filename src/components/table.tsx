@@ -14,7 +14,7 @@ const Table = <T extends { [key: string]: string | number | Date | unknown }>({
   const renderCell = (
     item: T,
     key: string | ((data: T) => string | ReactNode)
-  ) => {
+  ): ReactNode => {
     if (typeof key === 'function') {
       return key(item);
     }
@@ -23,7 +23,7 @@ const Table = <T extends { [key: string]: string | number | Date | unknown }>({
       return item[key].toLocaleDateString();
     }
 
-    return item[key];
+    return item[key] as ReactNode;
   };
 
   const renderClassCenter = (index: number) => {

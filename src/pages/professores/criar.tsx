@@ -53,7 +53,7 @@ const Criar = () => {
       setAlert({
         isOpen: true,
         type: 'danger',
-        message: e?.message || '',
+        message: (e as Error)?.message || '',
       });
       setDisable(false);
     }

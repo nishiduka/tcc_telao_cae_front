@@ -7,6 +7,7 @@ import { salasRoutes } from '../pages/salas/routes';
 import { cursosRoutes } from '../pages/cursos/routes';
 import { materiasRoutes } from '../pages/materias/routes';
 import { professoresRoutes } from '../pages/professores/routes';
+import { agendamentoRecorrenteRoutes } from '../pages/agendamentoRecorrente/routes';
 
 const routes = [
   {
@@ -28,6 +29,7 @@ const routes = [
   ...cursosRoutes,
   ...materiasRoutes,
   ...professoresRoutes,
+  ...agendamentoRecorrenteRoutes,
 ];
 
 const RoutesComponent = () => {

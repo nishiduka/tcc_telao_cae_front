@@ -23,7 +23,11 @@ const Listagem = () => {
       });
     } catch (error: unknown) {
       console.error(error);
-      setAlert({ isOpen: true, message: error.message, type: 'danger' });
+      setAlert({
+        isOpen: true,
+        message: (error as Error)?.message || '',
+        type: 'danger',
+      });
     }
   };
 
