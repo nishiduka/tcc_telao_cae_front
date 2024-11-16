@@ -17,3 +17,12 @@ export const listByWeekAndRoom = async (
 ): Promise<GenericResponse<AgendamentoDTO[]>> => {
   return request.get<AgendamentoDTO[]>(PATH + '/' + room + '/' + week);
 };
+
+export const listByDay = async (
+  day: Date
+): Promise<GenericResponse<AgendamentoDTO[]>> => {
+  return request.get<AgendamentoDTO[]>(
+    PATH +
+      `/dia?data=${day.getFullYear()}-${day.getMonth() + 1}-${day.getDate()}`
+  );
+};

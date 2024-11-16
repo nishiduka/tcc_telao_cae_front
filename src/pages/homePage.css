@@ -1,0 +1,61 @@
+/* Tamanho base padrão */
+html {
+  font-size: 1.04vw;
+}
+
+@media (min-width: 1080px) {
+  html {
+    font-size: 1.33vw; /* 1rem = 18px */
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 18px; /* 1rem = 18px */
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 16px; /* 1rem = 16px */
+  }
+}
+
+.agendamento_block {
+  font-size: 1rem;
+}
+
+.agendamento_titulo {
+  font-size: 1.3rem;
+}
+
+.agendamento_block span {
+  display: block;
+}
+
+.agendamento_card {
+  min-height: 11.3rem;
+  width: 100%;
+  padding: 1rem;
+  color: #FFF !important;
+}
+
+@media (min-width: 400px) {
+  .agendamento_card {
+    width: 48%;
+  }
+
+@media (min-width: 768px) {
+  .agendamento_block {
+    font-size: 1.5rem;
+  }
+
+  .agendamento_card {
+    width: 32%;
+    min-height: 16.3rem;
+  }
+  .agendamento_titulo {
+    font-size: 2rem;
+  }
+}
+}
