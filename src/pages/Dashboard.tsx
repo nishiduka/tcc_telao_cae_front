@@ -1,6 +1,12 @@
+import Template from '../components/template';
+
 const Dashboard = () => {
   // const { user } = useAuth();
-  return <div />;
+  return (
+    <Template>
+      <></>
+    </Template>
+  );
 };
 
 export default Dashboard;

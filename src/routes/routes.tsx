@@ -8,6 +8,8 @@ import { cursosRoutes } from '../pages/cursos/routes';
 import { materiasRoutes } from '../pages/materias/routes';
 import { professoresRoutes } from '../pages/professores/routes';
 import { agendamentoRecorrenteRoutes } from '../pages/agendamentoRecorrente/routes';
+import { agendamentoPontualRoutes } from '../pages/agendamentoPontual/routes';
+import { listagemRoutes } from '../pages/agendamento/routes';
 
 const routes = [
   {
@@ -30,6 +32,8 @@ const routes = [
   ...materiasRoutes,
   ...professoresRoutes,
   ...agendamentoRecorrenteRoutes,
+  ...agendamentoPontualRoutes,
+  ...listagemRoutes,
 ];
 
 const RoutesComponent = () => {

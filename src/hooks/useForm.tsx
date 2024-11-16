@@ -5,10 +5,15 @@ export const useForm = <T extends Record<string, unknown>>(
   requiredFields: string[]
 ) => {
   const [values, setValues] = useState<T>(initialValues);
+  console.log('useForm values:::', values);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const updateField = (values: Partial<T>) => {
+    setValues((prev) => ({ ...prev, ...values }));
   };
 
   const validate = () => {
@@ -27,5 +32,5 @@ export const useForm = <T extends Record<string, unknown>>(
     return { hasError, rows };
   };
 
-  return { values, handleChange, validate, setValues };
+  return { values, handleChange, validate, setValues, updateField };
 };

@@ -1,13 +1,12 @@
-import { EDiaSemana } from './eDiaSemana';
 import MateriaEntity from './materiaEntity';
 import ProfessorEntity from './professorEntity';
 import SalaEntity from './salaEntity';
 
-type AgendamentoRecorrenteEntity = {
+type AgendamentoPontualEntity = {
   id?: number;
-  diaSemana: EDiaSemana;
-  horaInicio: string;
-  horaFim: string;
+  data: Date;
+  horarioInicio: string;
+  horarioFim: string;
   professor: Required<Pick<ProfessorEntity, 'id'>> & ProfessorEntity;
   materia: Required<Pick<MateriaEntity, 'id'>> & MateriaEntity;
   sala: Required<Pick<SalaEntity, 'id'>> & SalaEntity;
@@ -15,4 +14,4 @@ type AgendamentoRecorrenteEntity = {
   updated_at?: Date;
 };
 
-export default AgendamentoRecorrenteEntity;
+export default AgendamentoPontualEntity;

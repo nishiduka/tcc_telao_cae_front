@@ -79,3 +79,26 @@ button:focus-visible {
 @keyframes l15{ 
   100%{transform: rotate(1turn)}
 }
+
+.custom-event {
+  position: relative;
+}
+.custom-tooltip {
+  display: none;
+
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 0.9em;
+  z-index: 100;
+}
+
+.custom-event:hover .custom-tooltip {
+  display: block;
+}
+

@@ -17,6 +17,13 @@ export class RequestGeneric {
       message = error;
     }
 
+    if (error?.response.httpStatus === 403) {
+      localStorage.removeItem('token');
+      delete api.defaults.headers.common['Authorization'];
+
+      return 'Sessão expirada. Faça login novamente.';
+    }
+
     if (error?.response?.data?.message !== null) {
       message = error?.response?.data?.message;
     }

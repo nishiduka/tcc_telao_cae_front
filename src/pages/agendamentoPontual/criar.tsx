@@ -7,13 +7,12 @@ import useRequest from '../../hooks/useRequest';
 import { list as listarProfessor } from '../../services/professores';
 import { list as listarMateria } from '../../services/materias';
 import { list as listarSala } from '../../services/salas';
-import { create } from '../../services/agendamento/agendamentoRecorrente';
+import { create } from '../../services/agendamento/agendamentoPontual';
 import { useForm } from '../../hooks/useForm';
 import { useAlert } from '../../hooks/useAlert';
 import ProfessorEntity from '../../domain/entity/professorEntity';
 import MateriaEntity from '../../domain/entity/materiaEntity';
 import SalaEntity from '../../domain/entity/salaEntity';
-import { EDiaSemana } from '../../domain/entity/eDiaSemana';
 import { generateTime } from '../../utils/generateTime';
 
 const Criar = () => {
@@ -34,11 +33,11 @@ const Criar = () => {
       sala: '',
       professor: '',
       materia: '',
-      diaSemana: '',
-      horaInicio: '',
-      horaFim: '',
+      data: '',
+      horarioInicio: '',
+      horarioFim: '',
     },
-    ['sala', 'professor', 'materia', 'diaSemana', 'horaInicio', 'horaFim']
+    ['sala', 'professor', 'materia', 'data', 'horarioInicio', 'horarioFim']
   );
 
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -55,7 +54,7 @@ const Criar = () => {
     try {
       const response = await create({
         ...values,
-        diaSemana: values.diaSemana as EDiaSemana,
+        data: new Date(values.data),
         sala: {
           id: parseInt(values.sala),
           nome: '',
@@ -103,7 +102,7 @@ const Criar = () => {
       });
 
       setTimeout(() => {
-        window.location.href = '/agendamentos';
+        window.location.href = '/agendamento-pontual/listagem';
       }, 2500);
     } catch (e: unknown) {
       setAlert({
@@ -118,7 +117,7 @@ const Criar = () => {
   return (
     <Template isLoading={isLoading} error={errors}>
       <div className="mt-5 mb-3">
-        <h2>Criar Agendamento Recorrente</h2>
+        <h2>Criar Agendamento Pontual</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
@@ -177,35 +176,26 @@ const Criar = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label for="diaSemana">Dia da Semana</Label>
+          <Label for="data">Data</Label>
           <Input
-            id="diaSemana"
-            name="diaSemana"
-            type="select"
+            id="data"
+            name="data"
+            type="date"
             onChange={handleChange}
-          >
-            <option value="" disabled selected>
-              Selecione
-            </option>
-            {Object.entries(EDiaSemana).map(([key, value]) => (
-              <option key={key} value={key} selected={key === values.diaSemana}>
-                {value}
-              </option>
-            ))}
-          </Input>
+          ></Input>
         </FormGroup>
 
         <FormGroup>
-          <Label for="horaInicio">Horário início</Label>
+          <Label for="horarioInicio">Horário início</Label>
           <Select
-            options={generateTime('08:00', '22:00').map((horaInicio) => ({
-              value: horaInicio,
-              label: horaInicio,
+            options={generateTime('08:00', '22:00').map((horarioInicio) => ({
+              value: horarioInicio,
+              label: horarioInicio,
             }))}
             onChange={(e) =>
               handleChange({
                 target: {
-                  name: 'horaInicio',
+                  name: 'horarioInicio',
                   value: e?.value?.toString() || '',
                 },
               } as unknown as React.ChangeEvent<HTMLInputElement>)
@@ -214,16 +204,16 @@ const Criar = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label for="horaFim">Horário fim</Label>
+          <Label for="horarioFim">Horário fim</Label>
           <Select
-            options={generateTime('08:00', '22:00').map((horaFim) => ({
-              value: horaFim,
-              label: horaFim,
+            options={generateTime('08:00', '22:00').map((horarioFim) => ({
+              value: horarioFim,
+              label: horarioFim,
             }))}
             onChange={(e) =>
               handleChange({
                 target: {
-                  name: 'horaFim',
+                  name: 'horarioFim',
                   value: e?.value?.toString() || '',
                 },
               } as unknown as React.ChangeEvent<HTMLInputElement>)

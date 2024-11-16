@@ -1,14 +1,14 @@
 import Atualizar from './atualizar';
 import Criar from './criar';
 
-export const agendamentoRecorrenteRoutes = [
+export const agendamentoPontualRoutes = [
   {
-    route: '/agendamento-recorrente/criar',
+    route: '/agendamento-pontual/criar',
     component: Criar,
     isPublic: false,
   },
   {
-    route: '/agendamento-recorrente/:id',
+    route: '/agendamento-pontual/:id',
     component: Atualizar,
     isPublic: false,
   },

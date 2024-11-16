@@ -18,12 +18,16 @@ const routes = [
     href: '/agendamento',
     child: [
       {
-        label: 'Listagem',
-        href: '/agendamento/listagem',
+        label: 'Listagem Agendamento',
+        href: '/agendamentos',
       },
       {
         label: 'Criar Agendamento Recorrente',
-        href: '/agendamento/criar',
+        href: '/agendamento-recorrente/criar',
+      },
+      {
+        label: 'Criar Agendamento Pontual',
+        href: '/agendamento-pontual/criar',
       },
     ],
   },
