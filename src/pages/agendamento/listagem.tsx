@@ -3,31 +3,34 @@ import Template from '../../components/template';
 import SalaEntity from '../../domain/entity/salaEntity';
 import { list } from '../../services/salas';
 import useRequest from '../../hooks/useRequest';
-import { FormGroup, Input, Label } from 'reactstrap';
+import { FormGroup, Label } from 'reactstrap';
 import { useForm } from '../../hooks/useForm';
 import Select from 'react-select';
 import AgendamentoDTO from '../../domain/entity/AgendamentoDTO';
 import { listByWeekAndRoom } from '../../services/agendamento/agendamento';
-import { useCallback, useEffect, useState } from 'react';
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import GenericResponse from '../../domain/dto/request/genericResponse';
 
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { CalendarOptions, EventClickArg } from '@fullcalendar/core/index.js';
+import { EventClickArg } from '@fullcalendar/core/index.js';
 
 const Listagem = () => {
   const { data, loading, error } = useRequest<SalaEntity[]>(list, []);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [events, setEvents] = useState<any[]>([]);
 
-  // const dataAgendamento = useRequest<AgendamentoDTO[]>(
-  //   listByWeekAndRoom,
-  //   []
-  // );
-
-  // const { setAlert } = useAlert();
-  const { values, handleChange, validate } = useForm(
+  const { values, handleChange } = useForm(
     {
       sala: '',
       data: '',
@@ -127,7 +130,18 @@ const Listagem = () => {
     [values.data]
   );
 
-  const renderEventContent = (eventInfo: any) => {
+  const renderEventContent = (eventInfo: {
+    event: { extendedProps: { professor: string; tipo: string } };
+    timeText:
+      | string
+      | number
+      | boolean
+      | ReactElement<string, string | JSXElementConstructor<string>>
+      | Iterable<ReactNode>
+      | ReactPortal
+      | null
+      | undefined;
+  }) => {
     const { professor, tipo } = eventInfo.event.extendedProps;
 
     return (
@@ -139,7 +153,7 @@ const Listagem = () => {
     );
   };
 
-  const handleDatesSet = (dateInfo: any) => {
+  const handleDatesSet = (dateInfo: { start: Date }) => {
     handleChange({
       target: {
         name: 'data',
