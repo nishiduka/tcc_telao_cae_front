@@ -21,7 +21,7 @@ const Header = ({ userName }: { userName: string }) => {
     <Navbar className="bg-success-subtle" style={{ width: '100%' }}>
       <Container className="d-flex justify-content-between">
         <NavbarBrand href="/dashboard" className="ps-4">
-          Telao
+          Agendif
         </NavbarBrand>
 
         <div>
