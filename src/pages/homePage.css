@@ -59,7 +59,7 @@ html {
 
   .agendamento_card {
     width: calc(25% - 5px);
-    min-height: 15rem !important;
+    min-height: 12rem !important;
   }
   .agendamento_titulo {
     font-size: 1.5rem;
