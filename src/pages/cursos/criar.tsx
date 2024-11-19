@@ -44,7 +44,7 @@ const Criar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Sala criada com sucesso',
+        message: 'curso criado com sucesso',
       });
 
       setTimeout(() => {
@@ -68,11 +68,11 @@ const Criar = () => {
       </div>
       <Form onSubmit={onsubmit}>
         <FormGroup>
-          <Label for="nome">Nome da sala</Label>
+          <Label for="nome">Nome do curso</Label>
           <Input
             id="nome"
             name="nome"
-            placeholder="Nome da Sala"
+            placeholder="Nome da curso"
             type="text"
             required
             onChange={handleChange}

@@ -102,7 +102,7 @@ const Criar = () => {
       });
 
       setTimeout(() => {
-        window.location.href = '/agendamento-pontual/listagem';
+        window.location.href = '/agendamentos';
       }, 2500);
     } catch (e: unknown) {
       setAlert({

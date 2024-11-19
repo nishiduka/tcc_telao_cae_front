@@ -83,7 +83,7 @@ const Atualizar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Sala atualizada com sucesso',
+        message: 'Materia atualizada com sucesso',
       });
 
       setTimeout(() => {
@@ -105,7 +105,7 @@ const Atualizar = () => {
       error={error || materiaInfo.error}
     >
       <div className="mt-5 mb-3">
-        <h2>Atualizar sala</h2>
+        <h2>Atualizar Materia</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
@@ -142,7 +142,7 @@ const Atualizar = () => {
           <Input
             id="sigla"
             name="sigla"
-            placeholder="sigla da Sala"
+            placeholder="sigla da Materia"
             type="text"
             required
             onChange={handleChange}

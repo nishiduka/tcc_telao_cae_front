@@ -85,7 +85,7 @@ const Atualizar = () => {
   return (
     <Template isLoading={infos.loading} error={infos.error}>
       <div className="mt-5 mb-3">
-        <h2>Atualizar sala</h2>
+        <h2>Atualizar Professor</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>

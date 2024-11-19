@@ -47,7 +47,7 @@ const Criar = () => {
       });
 
       setTimeout(() => {
-        window.location.href = '/cursos/listagem';
+        window.location.href = '/professores/listagem';
       }, 2500);
     } catch (e: unknown) {
       setAlert({

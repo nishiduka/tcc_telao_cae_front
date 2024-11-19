@@ -18,7 +18,7 @@ const Listagem = () => {
       fetchData();
       setAlert({
         isOpen: true,
-        message: 'Professor removida com sucesso',
+        message: 'Professor removido com sucesso',
         type: 'success',
       });
     } catch (error: unknown) {

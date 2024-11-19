@@ -69,7 +69,7 @@ const Atualizar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Sala atualizada com sucesso',
+        message: 'Curso atualizado com sucesso',
       });
 
       setTimeout(() => {
@@ -88,16 +88,16 @@ const Atualizar = () => {
   return (
     <Template isLoading={infos.loading} error={infos.error}>
       <div className="mt-5 mb-3">
-        <h2>Atualizar sala</h2>
+        <h2>Atualizar Curso</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
         <FormGroup>
-          <Label for="nome">Nome da sala</Label>
+          <Label for="nome">Nome do Curso</Label>
           <Input
             id="nome"
             name="nome"
-            placeholder="Nome da Sala"
+            placeholder="Nome da Curso"
             type="text"
             required
             onChange={handleChange}

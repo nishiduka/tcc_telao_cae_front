@@ -55,7 +55,7 @@ const Criar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Sala criada com sucesso',
+        message: 'Materia criada com sucesso',
       });
 
       setTimeout(() => {
@@ -94,11 +94,11 @@ const Criar = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label for="nome">Nome da sala</Label>
+          <Label for="nome">Nome da Materia</Label>
           <Input
             id="nome"
             name="nome"
-            placeholder="Nome da Sala"
+            placeholder="Nome da Materia"
             type="text"
             required
             onChange={handleChange}

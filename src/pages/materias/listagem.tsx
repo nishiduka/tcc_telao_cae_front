@@ -18,7 +18,7 @@ const Listagem = () => {
       fetchData();
       setAlert({
         isOpen: true,
-        message: 'Sala removida com sucesso',
+        message: 'Materia removida com sucesso',
         type: 'success',
       });
     } catch (error: unknown) {
