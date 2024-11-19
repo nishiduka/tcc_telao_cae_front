@@ -31,7 +31,7 @@ const DateTimeDisplay = () => {
   return (
     <div>
       <h5>
-        {formatDate(dateTime)} {formatTime(dateTime)}
+        {formatDate(dateTime).toUpperCase()} - {formatTime(dateTime)}
       </h5>
     </div>
   );

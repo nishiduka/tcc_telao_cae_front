@@ -15,7 +15,7 @@ const HomePage = () => {
   useEffect(() => {
     setInterval(() => {
       setDate(new Date());
-    }, 1800000);
+    }, 600000);
   }, []);
 
   const getDate = useCallback(async () => {
@@ -31,17 +31,28 @@ const HomePage = () => {
     return handleSalas.data.filter((sala) => sala.bloco.id === 1);
   }, [handleSalas.data]);
 
-  const checkTimeAfter = (time: string, date: Date) => {
+  const convertStringToDate = (time: string) => {
     const timeArray = time.split(':');
-    const timeDate = new Date(
+    return new Date(
       date.getFullYear(),
       date.getMonth(),
       date.getDate(),
       parseInt(timeArray[0]),
       parseInt(timeArray[1])
     );
+  };
 
-    return timeDate.getTime() > date.getTime();
+  const checkTimeAfter = (startTime: string, endTime: string, date: Date) => {
+    const startTimeDate = convertStringToDate(startTime);
+
+    return (
+      startTimeDate.getTime() < date.getTime() &&
+      date.getTime() < convertStringToDate(endTime).getTime()
+    );
+  };
+
+  const sliceText = (text: string, length: number) => {
+    return text.length > length ? text.slice(0, length) + '...' : text;
   };
 
   const renderAgendamento = (agendamento: AgendamentoDTO | undefined) => {
@@ -54,11 +65,11 @@ const HomePage = () => {
 
     return (
       <div className="agendamento_block">
-        <span>Curso: {agendamento?.materia.curso.sigla}</span>
-        <span>Matéria: {agendamento?.materia.sigla}</span>
-        <span>Professor: {agendamento?.professor.nome}</span>
-        <span>Horário início: {agendamento?.horarioInicio}</span>
-        <span>Horário fim: {agendamento?.horarioFim}</span>
+        <span>Curso: {sliceText(agendamento?.materia.curso.sigla, 20)}</span>
+        <span>Matéria: {sliceText(agendamento?.materia.sigla, 20)}</span>
+        <span>Professor: {sliceText(agendamento?.professor.nome, 20)}</span>
+        <span>Horário início: {sliceText(agendamento?.horarioInicio, 20)}</span>
+        <span>Horário fim: {sliceText(agendamento?.horarioFim, 20)}</span>
       </div>
     );
   };
@@ -67,7 +78,7 @@ const HomePage = () => {
     const agendamentos = handleAgendamentos.data?.find(
       (agendamento) =>
         agendamento.sala.id === sala.id &&
-        checkTimeAfter(agendamento.horarioFim, date)
+        checkTimeAfter(agendamento.horarioInicio, agendamento.horarioFim, date)
     );
 
     return (
@@ -89,7 +100,7 @@ const HomePage = () => {
       <DateTimeDisplay />
 
       <hr />
-      <div className="d-flex gap-2 flex-wrap">
+      <div className="home-list">
         {listSalas.map((sala) => renderSala(sala))}
       </div>
     </div>

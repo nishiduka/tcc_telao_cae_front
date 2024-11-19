@@ -21,6 +21,13 @@ html {
   }
 }
 
+.home-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 5px;
+}
+
 .agendamento_block {
   font-size: 1rem;
 }
@@ -34,7 +41,7 @@ html {
 }
 
 .agendamento_card {
-  min-height: 11.3rem;
+  height: 11.3rem;
   width: 100%;
   padding: 1rem;
   color: #FFF !important;
@@ -47,15 +54,21 @@ html {
 
 @media (min-width: 768px) {
   .agendamento_block {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
 
   .agendamento_card {
-    width: 32%;
-    min-height: 16.3rem;
+    width: calc(25% - 5px);
+    min-height: 15rem !important;
   }
   .agendamento_titulo {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
+}
+
+@media (min-width: 1920px) {
+  .agendamento_card {
+    min-height: 14rem !important;
+  }
 }
