@@ -1,22 +1,33 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { listByDay } from '../services/agendamento/agendamento';
 import useRequest from '../hooks/useRequest';
 import { list } from '../services/salas';
 import SalaEntity from '../domain/entity/salaEntity';
-import { Card } from 'reactstrap';
+import { Input } from 'reactstrap';
 import AgendamentoDTO from '../domain/entity/AgendamentoDTO';
 import DateTimeDisplay from '../components/DateTimeDisplay';
 
 import './homePage.css';
+import Modal from '../components/modal';
+import { formatHour, getDayName } from '../utils/date';
+import Select from 'react-select';
+import { generateTime } from '../utils/generateTime';
+import { END_TIME, START_TIME } from '../mocks/hours';
 
 const HomePage = () => {
   const [date, setDate] = useState<Date>(new Date());
+  const [modal, setModal] = useState<boolean>(false);
+  const [salaId, setSalaId] = useState<string>('');
+  const [stopTimer, setStopTimer] = useState<boolean>(false);
+  const [modalTimer, setModalTimer] = useState<boolean>(false);
 
-  useEffect(() => {
-    setInterval(() => {
-      setDate(new Date());
-    }, 600000);
-  }, []);
+  const [referDate, setReferDate] = useState<{
+    date: string;
+    hour: string;
+  }>({
+    date: date.toISOString().split('T')[0],
+    hour: date.getHours() + ':' + date.getMinutes(),
+  });
 
   const getDate = useCallback(async () => {
     return await listByDay(date);
@@ -46,8 +57,8 @@ const HomePage = () => {
     const startTimeDate = convertStringToDate(startTime);
 
     return (
-      startTimeDate.getTime() < date.getTime() &&
-      date.getTime() < convertStringToDate(endTime).getTime()
+      startTimeDate.getTime() <= date.getTime() &&
+      date.getTime() <= convertStringToDate(endTime).getTime()
     );
   };
 
@@ -82,27 +93,152 @@ const HomePage = () => {
     );
 
     return (
-      <Card
+      <div
         key={sala.id}
         className={`agendamento_card ${
           agendamentos ? 'bg-danger' : 'bg-success'
         }`}
+        onClick={() => {
+          if (agendamentos) {
+            setSalaId(sala?.id?.toString() || '');
+            setModal(true);
+          }
+        }}
       >
         <h5 className="mb-0 agendamento_titulo">{sala.nome}</h5>
         <hr className="my-2" />
         {renderAgendamento(agendamentos)}
-      </Card>
+      </div>
+    );
+  };
+
+  const footerData = () => {
+    return (
+      <button
+        type="button"
+        className="btn btn-primary"
+        onClick={() => {
+          setModalTimer(false);
+
+          console.log(
+            'referDate?.date +  + referDate?.hour::::',
+            referDate?.date + 'T' + referDate?.hour
+          );
+
+          setDate(new Date(referDate?.date + 'T' + referDate?.hour));
+
+          setStopTimer(true);
+        }}
+      >
+        Alterar
+      </button>
     );
   };
 
   return (
-    <div className="p-4">
-      <DateTimeDisplay />
+    <div className="content">
+      <div className="d-flex align-items-center justify-content-between flex-column flex-md-row gap-2">
+        <DateTimeDisplay
+          date={date}
+          stopTimer={stopTimer}
+          updateDate={setDate}
+        />
+
+        <div className="d-flex gap-2">
+          <button
+            className="pl-4 btn btn-success"
+            onClick={() => {
+              setDate(new Date());
+              setStopTimer(false);
+            }}
+          >
+            Hoje
+          </button>
+          <button
+            className="pl-4 btn btn-primary"
+            onClick={() => setModalTimer(true)}
+          >
+            Alterar
+          </button>
+        </div>
+      </div>
 
       <hr />
       <div className="home-list">
         {listSalas.map((sala) => renderSala(sala))}
       </div>
+
+      <Modal
+        titulo={
+          'Agendamentos ' +
+          listSalas.find((item) => item?.id === parseInt(salaId))?.nome
+        }
+        show={modal}
+        setShow={setModal}
+      >
+        <div>
+          <span>{getDayName(date)}</span>
+          <hr />
+
+          {handleAgendamentos.data
+            ?.filter((item) => item.sala.id === parseInt(salaId))
+            ?.sort((a, b) => {
+              return a.horarioInicio > b.horarioInicio ? 1 : -1;
+            })
+            .map((agendamento) => (
+              <div key={agendamento.id}>
+                <span>
+                  {agendamento.materia.curso.sigla} -{' '}
+                  {agendamento.materia.sigla}
+                </span>
+                <span> - {agendamento.professor.nome}</span>
+                <span> - {formatHour(agendamento.horarioInicio)}</span>
+                <span> - {formatHour(agendamento.horarioFim)}</span>
+              </div>
+            ))}
+        </div>
+      </Modal>
+
+      <Modal
+        titulo={'Data'}
+        show={modalTimer}
+        setShow={setModalTimer}
+        footer={footerData}
+      >
+        <div>
+          <label htmlFor="">Data</label>
+          <Input
+            id="data"
+            name="data"
+            type="date"
+            defaultValue={referDate?.date}
+            onChange={(e) => {
+              setReferDate({
+                date: e.target.value,
+                hour: referDate?.hour || '',
+              });
+            }}
+          ></Input>
+          <br />
+          <label htmlFor="">Horário</label>
+          <Select
+            options={generateTime(START_TIME, END_TIME).map((horaInicio) => ({
+              value: horaInicio,
+              label: horaInicio,
+            }))}
+            onChange={(e) =>
+              setReferDate({
+                date: referDate?.date || '',
+                hour: e?.value || '',
+              })
+            }
+            defaultValue={{
+              value: referDate?.hour || '',
+              label: referDate?.hour || '',
+            }}
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

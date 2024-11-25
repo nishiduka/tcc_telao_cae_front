@@ -216,7 +216,7 @@ const Criar = () => {
         <FormGroup>
           <Label for="horaFim">Horário fim</Label>
           <Select
-            options={generateTime('08:00', '22:00').map((horaFim) => ({
+            options={generateTime('07:00', '23:00').map((horaFim) => ({
               value: horaFim,
               label: horaFim,
             }))}

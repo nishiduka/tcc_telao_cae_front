@@ -21,6 +21,7 @@ import { EDiaSemana } from '../../domain/entity/eDiaSemana';
 import { generateTime } from '../../utils/generateTime';
 import { useParams } from 'react-router-dom';
 import AgendamentoRecorrenteEntity from '../../domain/entity/agendamentoRecorrenteEntity';
+import { END_TIME, START_TIME } from '../../mocks/hours';
 
 const Atualizar = () => {
   const params = useParams();
@@ -324,7 +325,7 @@ const Atualizar = () => {
               value: agendametoRequest.data.horaInicio,
               label: agendametoRequest.data.horaInicio,
             }}
-            options={generateTime('08:00', '22:00').map((horaInicio) => ({
+            options={generateTime(START_TIME, END_TIME).map((horaInicio) => ({
               value: horaInicio,
               label: horaInicio,
             }))}
@@ -346,7 +347,7 @@ const Atualizar = () => {
               value: agendametoRequest.data.horaFim,
               label: agendametoRequest.data.horaFim,
             }}
-            options={generateTime('08:00', '22:00').map((horaFim) => ({
+            options={generateTime(START_TIME, END_TIME).map((horaFim) => ({
               value: horaFim,
               label: horaFim,
             }))}

@@ -14,6 +14,7 @@ import ProfessorEntity from '../../domain/entity/professorEntity';
 import MateriaEntity from '../../domain/entity/materiaEntity';
 import SalaEntity from '../../domain/entity/salaEntity';
 import { generateTime } from '../../utils/generateTime';
+import { END_TIME, START_TIME } from '../../mocks/hours';
 
 const Criar = () => {
   const professorRequest = useRequest<ProfessorEntity[]>(listarProfessor, []);
@@ -188,10 +189,12 @@ const Criar = () => {
         <FormGroup>
           <Label for="horarioInicio">Horário início</Label>
           <Select
-            options={generateTime('08:00', '22:00').map((horarioInicio) => ({
-              value: horarioInicio,
-              label: horarioInicio,
-            }))}
+            options={generateTime(START_TIME, END_TIME).map(
+              (horarioInicio) => ({
+                value: horarioInicio,
+                label: horarioInicio,
+              })
+            )}
             onChange={(e) =>
               handleChange({
                 target: {
@@ -206,7 +209,7 @@ const Criar = () => {
         <FormGroup>
           <Label for="horarioFim">Horário fim</Label>
           <Select
-            options={generateTime('08:00', '22:00').map((horarioFim) => ({
+            options={generateTime(START_TIME, END_TIME).map((horarioFim) => ({
               value: horarioFim,
               label: horarioFim,
             }))}

@@ -20,6 +20,7 @@ import SalaEntity from '../../domain/entity/salaEntity';
 import { generateTime } from '../../utils/generateTime';
 import { useParams } from 'react-router-dom';
 import AgendamentoPontualEntity from '../../domain/entity/agendamentoPontualEntity';
+import { END_TIME, START_TIME } from '../../mocks/hours';
 
 const defaultRequest = Object.freeze({
   data: new Date(),
@@ -307,10 +308,12 @@ const Atualizar = () => {
               value: agendametoRequest.data.horarioInicio,
               label: agendametoRequest.data.horarioInicio,
             }}
-            options={generateTime('08:00', '22:00').map((horarioInicio) => ({
-              value: horarioInicio,
-              label: horarioInicio,
-            }))}
+            options={generateTime(START_TIME, END_TIME).map(
+              (horarioInicio) => ({
+                value: horarioInicio,
+                label: horarioInicio,
+              })
+            )}
             onChange={(e) =>
               handleChange({
                 target: {
@@ -329,7 +332,7 @@ const Atualizar = () => {
               value: agendametoRequest.data.horarioFim,
               label: agendametoRequest.data.horarioFim,
             }}
-            options={generateTime('08:00', '22:00').map((horarioFim) => ({
+            options={generateTime(START_TIME, END_TIME).map((horarioFim) => ({
               value: horarioFim,
               label: horarioFim,
             }))}

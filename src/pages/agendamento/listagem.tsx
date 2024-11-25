@@ -41,7 +41,7 @@ const Listagem = () => {
     GenericResponse<AgendamentoDTO[]>
   > => {
     if (!values.data || !values.sala) {
-      return Promise.reject(new Error('Data or Sala is missing'));
+      return Promise.reject(new Error('Sala é obrigatório'));
     }
 
     const date = getWeekNumber(new Date(values.data));
