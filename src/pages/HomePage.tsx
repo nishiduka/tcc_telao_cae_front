@@ -66,6 +66,14 @@ const HomePage = () => {
     return text.length > length ? text.slice(0, length) + '...' : text;
   };
 
+  const agendamentoSala = useMemo(() => {
+    return handleAgendamentos.data
+      ?.filter((item) => item.sala.id === parseInt(salaId))
+      ?.sort((a, b) => {
+        return a.horarioInicio > b.horarioInicio ? 1 : -1;
+      });
+  }, [salaId]);
+
   const renderAgendamento = (agendamento: AgendamentoDTO | undefined) => {
     if (!agendamento)
       return (
@@ -86,10 +94,12 @@ const HomePage = () => {
   };
 
   const renderSala = (sala: SalaEntity) => {
-    const agendamentos = handleAgendamentos.data?.find(
-      (agendamento) =>
-        agendamento.sala.id === sala.id &&
-        checkTimeAfter(agendamento.horarioInicio, agendamento.horarioFim, date)
+    const agendamentosSala = handleAgendamentos.data?.filter(
+      (agendamento) => agendamento.sala.id === sala.id
+    );
+
+    const agendamentos = agendamentosSala.find((agendamento) =>
+      checkTimeAfter(agendamento.horarioInicio, agendamento.horarioFim, date)
     );
 
     return (
@@ -99,10 +109,8 @@ const HomePage = () => {
           agendamentos ? 'bg-danger' : 'bg-success'
         }`}
         onClick={() => {
-          if (agendamentos) {
-            setSalaId(sala?.id?.toString() || '');
-            setModal(true);
-          }
+          setSalaId(sala?.id?.toString() || '');
+          setModal(true);
         }}
       >
         <h5 className="mb-0 agendamento_titulo">{sala.nome}</h5>
@@ -119,12 +127,6 @@ const HomePage = () => {
         className="btn btn-primary"
         onClick={() => {
           setModalTimer(false);
-
-          console.log(
-            'referDate?.date +  + referDate?.hour::::',
-            referDate?.date + 'T' + referDate?.hour
-          );
-
           setDate(new Date(referDate?.date + 'T' + referDate?.hour));
 
           setStopTimer(true);
@@ -180,12 +182,8 @@ const HomePage = () => {
           <span>{getDayName(date)}</span>
           <hr />
 
-          {handleAgendamentos.data
-            ?.filter((item) => item.sala.id === parseInt(salaId))
-            ?.sort((a, b) => {
-              return a.horarioInicio > b.horarioInicio ? 1 : -1;
-            })
-            .map((agendamento) => (
+          {agendamentoSala.length > 0 ? (
+            agendamentoSala.map((agendamento) => (
               <div key={agendamento.id}>
                 <span>
                   {agendamento.materia.curso.sigla} -{' '}
@@ -195,7 +193,10 @@ const HomePage = () => {
                 <span> - {formatHour(agendamento.horarioInicio)}</span>
                 <span> - {formatHour(agendamento.horarioFim)}</span>
               </div>
-            ))}
+            ))
+          ) : (
+            <span>Nenhum agendamento</span>
+          )}
         </div>
       </Modal>
 

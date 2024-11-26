@@ -10,6 +10,7 @@ import { professoresRoutes } from '../pages/professores/routes';
 import { agendamentoRecorrenteRoutes } from '../pages/agendamentoRecorrente/routes';
 import { agendamentoPontualRoutes } from '../pages/agendamentoPontual/routes';
 import { listagemRoutes } from '../pages/agendamento/routes';
+import { usuariosRoutes } from '../pages/usuarios/routes';
 
 const routes = [
   {
@@ -34,6 +35,7 @@ const routes = [
   ...agendamentoRecorrenteRoutes,
   ...agendamentoPontualRoutes,
   ...listagemRoutes,
+  ...usuariosRoutes,
 ];
 
 const RoutesComponent = () => {

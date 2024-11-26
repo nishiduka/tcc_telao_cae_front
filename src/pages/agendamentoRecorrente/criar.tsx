@@ -15,6 +15,7 @@ import MateriaEntity from '../../domain/entity/materiaEntity';
 import SalaEntity from '../../domain/entity/salaEntity';
 import { EDiaSemana } from '../../domain/entity/eDiaSemana';
 import { generateTime } from '../../utils/generateTime';
+import { END_TIME, START_TIME } from '../../mocks/hours';
 
 const Criar = () => {
   const professorRequest = useRequest<ProfessorEntity[]>(listarProfessor, []);
@@ -48,7 +49,6 @@ const Criar = () => {
 
     if (hasError) {
       alert('Preencha todos os campos');
-      setDisable(false);
       return;
     }
 
@@ -99,7 +99,7 @@ const Criar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Agendamento criado com sucesso',
+        message: 'Agendamento atualizado com sucesso',
       });
 
       setTimeout(() => {
@@ -198,7 +198,7 @@ const Criar = () => {
         <FormGroup>
           <Label for="horaInicio">Horário início</Label>
           <Select
-            options={generateTime('08:00', '22:00').map((horaInicio) => ({
+            options={generateTime(START_TIME, END_TIME).map((horaInicio) => ({
               value: horaInicio,
               label: horaInicio,
             }))}
@@ -216,7 +216,7 @@ const Criar = () => {
         <FormGroup>
           <Label for="horaFim">Horário fim</Label>
           <Select
-            options={generateTime('07:00', '23:00').map((horaFim) => ({
+            options={generateTime(START_TIME, END_TIME).map((horaFim) => ({
               value: horaFim,
               label: horaFim,
             }))}

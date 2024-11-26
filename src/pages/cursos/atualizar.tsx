@@ -47,6 +47,7 @@ const Atualizar = () => {
 
     if (hasError) {
       alert('Preencha todos os campos');
+      setDisable(false);
       return;
     }
     console.log('values::::', values);

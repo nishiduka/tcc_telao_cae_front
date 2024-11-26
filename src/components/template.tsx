@@ -5,6 +5,8 @@ import Aside from './aside';
 import { useAlert } from '../hooks/useAlert';
 import { Alert } from 'reactstrap';
 
+import './template.css';
+
 const Template = ({
   children,
   isLoading,
@@ -22,7 +24,9 @@ const Template = ({
         className="w-100 d-flex justify-content-center align-items-center"
         style={{ height: '100vh' }}
       >
-        <div className="loader"></div>
+        <div>
+          <div className="loader"></div>
+        </div>
       </div>
     );
   }

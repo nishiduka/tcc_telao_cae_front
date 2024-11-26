@@ -15,6 +15,7 @@ const useRequest = <T,>(
   const fetchData = useCallback(async () => {
     try {
       const response = await request();
+      console.log('response::::', response);
       setData(response.content);
     } catch (error: unknown) {
       setError(error as Error);

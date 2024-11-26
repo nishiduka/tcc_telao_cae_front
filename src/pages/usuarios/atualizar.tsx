@@ -6,50 +6,46 @@ import Template from '../../components/template';
 import { useForm } from '../../hooks/useForm';
 import { useAlert } from '../../hooks/useAlert';
 import useRequest from '../../hooks/useRequest';
-import { list } from '../../services/cursos';
-import { update, search } from '../../services/materias';
-import CursoEntity from '../../domain/entity/cursoEntity';
-import MateriaEntity from '../../domain/entity/materiaEntity';
-import Select from 'react-select';
+import { getUser, updateUser } from '../../services/auth';
+import UserEntity from '../../domain/entity/userEntity';
+import ERole from '../../domain/dto/enum/eRole';
 
 const Atualizar = () => {
   const params = useParams();
   const id = parseInt(params.id || '');
 
-  const { data, loading, error } = useRequest<CursoEntity[]>(list, []);
-
   const getInfo = useCallback(async () => {
-    const response = await search(id);
+    const response = await getUser(id);
     return response;
   }, [id]);
-  const materiaInfo = useRequest<MateriaEntity>(getInfo, {
+
+  const userInfo = useRequest<UserEntity>(getInfo, {
     nome: '',
-    sigla: '',
-    curso: {
-      id: 0,
-      nome: '',
-      sigla: '',
-    },
+    login: '',
+    role: ERole.ADMIN,
+    password: '',
   });
 
   const { setAlert } = useAlert();
   const [disable, setDisable] = useState(false);
   const { values, handleChange, validate, setValues } = useForm(
     {
-      nome: materiaInfo.data.nome,
-      curso: materiaInfo.data.curso.id,
-      sigla: materiaInfo.data.sigla,
+      nome: userInfo.data.nome,
+      login: userInfo.data.login,
+      role: userInfo.data.role,
+      password: userInfo.data.password,
     },
-    ['nome', 'curso', 'sigla']
+    ['nome', 'login', 'role']
   );
 
   useEffect(() => {
     setValues({
-      nome: materiaInfo.data.nome,
-      curso: materiaInfo.data.curso.id,
-      sigla: materiaInfo.data.sigla,
+      nome: userInfo.data.nome,
+      login: userInfo.data.login,
+      role: userInfo.data.role,
+      password: '',
     });
-  }, [materiaInfo.data, setValues]);
+  }, [userInfo.data, setValues]);
 
   const onsubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -61,18 +57,12 @@ const Atualizar = () => {
       setDisable(false);
       return;
     }
-
     console.log('values::::', values);
 
     try {
-      const response = await update({
+      const response = await updateUser({
         id: id,
         ...values,
-        curso: {
-          id: values?.curso,
-          nome: '',
-          sigla: '',
-        },
       });
 
       if (!response.success) {
@@ -87,11 +77,11 @@ const Atualizar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Materia atualizada com sucesso',
+        message: 'Usuario atualizado com sucesso',
       });
 
       setTimeout(() => {
-        window.location.href = '/materias/listagem';
+        window.location.href = '/usuarios/listagem';
       }, 2500);
     } catch (e: unknown) {
       setAlert({
@@ -103,35 +93,19 @@ const Atualizar = () => {
     }
   };
 
-  const currentValue = () => {
-    let id = values?.curso;
-
-    if (typeof id === 'string') {
-      id = parseInt(id);
-    }
-
-    return {
-      value: values?.curso,
-      label: data.find((curso) => curso.id === id)?.nome,
-    };
-  };
-
   return (
-    <Template
-      isLoading={loading || materiaInfo.loading}
-      error={error || materiaInfo.error}
-    >
+    <Template isLoading={userInfo.loading} error={userInfo.error}>
       <div className="mt-5 mb-3">
-        <h2>Atualizar Materia</h2>
+        <h2>Atualizar Usuário</h2>
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
         <FormGroup>
-          <Label for="nome">Nome da Matéria</Label>
+          <Label for="nome">Nome do Usuário</Label>
           <Input
             id="nome"
             name="nome"
-            placeholder="Nome da Matéria"
+            placeholder="Nome do usuário"
             type="text"
             required
             onChange={handleChange}
@@ -140,34 +114,38 @@ const Atualizar = () => {
         </FormGroup>
 
         <FormGroup>
-          <Label for="nome">Sigla</Label>
+          <Label for="login">Email</Label>
           <Input
-            id="sigla"
-            name="sigla"
-            placeholder="sigla da Materia"
+            id="login"
+            name="login"
+            placeholder="email"
             type="text"
             required
             onChange={handleChange}
-            value={values.sigla}
+            value={values.login}
           />
         </FormGroup>
 
         <FormGroup>
-          <Label for="curso">Curso</Label>
-          <Select
-            options={data.map((curso) => ({
-              value: curso.id,
-              label: curso.nome,
-            }))}
-            value={currentValue()}
-            onChange={(e) =>
-              handleChange({
-                target: {
-                  name: 'curso',
-                  value: e?.value?.toString() || '',
-                },
-              } as unknown as React.ChangeEvent<HTMLInputElement>)
-            }
+          <Label for="role">Nível de usuário</Label>
+          <Input id="role" name="role" type="select" onChange={handleChange}>
+            {Object.values(ERole).map((role) => (
+              <option key={role} value={role} selected={values.role === role}>
+                {role}
+              </option>
+            ))}
+          </Input>
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="password">Senha</Label>
+          <Input
+            id="password"
+            name="password"
+            placeholder="senha"
+            type="password"
+            onChange={handleChange}
+            value={values.password}
           />
         </FormGroup>
 

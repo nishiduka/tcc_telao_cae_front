@@ -22,8 +22,35 @@ export const getCurrentUser = async (): Promise<UserEntity> => {
   return response.content;
 };
 
+export const getUsers = async (): Promise<GenericResponse<UserEntity[]>> => {
+  const response = await request.get<UserEntity[]>(PATH + '/listagem');
+  return response;
+};
+
+export const getUser = async (
+  id: number
+): Promise<GenericResponse<UserEntity>> => {
+  const response = await request.get<UserEntity>(PATH + '/user/' + id);
+  return response;
+};
+
 export const createUser = async (
   data: UserEntity
 ): Promise<GenericResponse<UserEntity>> => {
-  return await request.post<UserEntity>(PATH + '/create', data);
+  return await request.post<UserEntity>(PATH + '/register', data);
+};
+
+export const updateUser = async (
+  data: UserEntity
+): Promise<GenericResponse<UserEntity>> => {
+  return await request.put<UserEntity>(PATH + '/update/' + data.id, {
+    nome: data.nome,
+    login: data.login,
+    password: data?.password || null,
+    role: data.role,
+  });
+};
+
+export const removeUser = async (id: number): Promise<void> => {
+  await request.delete<UserEntity>(PATH + '/delete/' + id);
 };

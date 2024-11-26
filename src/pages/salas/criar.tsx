@@ -8,6 +8,7 @@ import { list } from '../../services/blocos';
 import { create } from '../../services/salas';
 import { useForm } from '../../hooks/useForm';
 import { useAlert } from '../../hooks/useAlert';
+import Select from 'react-select';
 
 const Criar = () => {
   const { data, loading, error } = useRequest<BlocoEntity[]>(list, []);
@@ -32,6 +33,7 @@ const Criar = () => {
 
     if (hasError) {
       alert('Preencha todos os campos');
+      setDisable(false);
       return;
     }
 
@@ -74,6 +76,15 @@ const Criar = () => {
     }
   };
 
+  const currentValue = () => {
+    const id = values?.bloco;
+
+    return {
+      value: values?.bloco,
+      label: data.find((bloco) => bloco?.id?.toString() === id)?.nome,
+    };
+  };
+
   return (
     <Template isLoading={loading} error={error}>
       <div className="mt-5 mb-3">
@@ -81,21 +92,6 @@ const Criar = () => {
         <hr />
       </div>
       <Form onSubmit={onsubmit}>
-        <FormGroup>
-          <Label for="bloco">Bloco</Label>
-          <Input id="bloco" name="bloco" type="select" onChange={handleChange}>
-            {data.map((bloco) => (
-              <option
-                key={bloco.id}
-                value={bloco.id}
-                selected={values.bloco === bloco.id.toString()}
-              >
-                {bloco.nome}
-              </option>
-            ))}
-          </Input>
-        </FormGroup>
-
         <FormGroup>
           <Label for="nome">Nome da sala</Label>
           <Input
@@ -106,6 +102,25 @@ const Criar = () => {
             required
             onChange={handleChange}
             value={values.nome}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Label for="bloco">Bloco</Label>
+          <Select
+            options={data.map((bloco) => ({
+              value: bloco.id?.toString() || '',
+              label: bloco.nome,
+            }))}
+            value={currentValue()}
+            onChange={(e) =>
+              handleChange({
+                target: {
+                  name: 'bloco',
+                  value: e?.value?.toString() || '',
+                },
+              } as unknown as React.ChangeEvent<HTMLInputElement>)
+            }
           />
         </FormGroup>
 

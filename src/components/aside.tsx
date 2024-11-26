@@ -87,6 +87,20 @@ const routes = [
       },
     ],
   },
+  {
+    label: 'Usuarios',
+    href: '/usuarios',
+    child: [
+      {
+        label: 'Listagem',
+        href: '/usuarios/listagem',
+      },
+      {
+        label: 'Criar',
+        href: '/usuarios/criar',
+      },
+    ],
+  },
 ] as Route[];
 
 const Aside = () => {

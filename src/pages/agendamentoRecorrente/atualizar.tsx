@@ -156,7 +156,7 @@ const Atualizar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Agendamento criado com sucesso',
+        message: 'Agendamento atualizado com sucesso',
       });
 
       setTimeout(() => {

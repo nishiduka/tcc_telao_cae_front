@@ -44,6 +44,7 @@ const Atualizar = () => {
 
     if (hasError) {
       alert('Preencha todos os campos');
+      setDisable(false);
       return;
     }
     console.log('values::::', values);
@@ -66,7 +67,7 @@ const Atualizar = () => {
       setAlert({
         isOpen: true,
         type: 'success',
-        message: 'Professor atualizada com sucesso',
+        message: 'Professor atualizado com sucesso',
       });
 
       setTimeout(() => {

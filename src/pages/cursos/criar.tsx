@@ -26,6 +26,7 @@ const Criar = () => {
 
     if (hasError) {
       alert('Preencha todos os campos');
+      setDisable(false);
       return;
     }
 
